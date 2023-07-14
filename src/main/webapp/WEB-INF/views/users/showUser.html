@@ -11,10 +11,10 @@
 <p th:text="${user.getAge()}">age</p>
 <p th:text="${user.getEmail()}">email</p>
 
-<a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
+<a th:href="@{/users/{id}/edit(id=${user.getId()})}">Редактировать</a>
 
 <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
-    <input type="submit" value="Delete"/>
+    <input type="submit" value="Удалить человека"/>
 </form>
 
 </body>

@@ -7,16 +7,16 @@
 <body>
 
 <form th:method="POST" th:action="@{/users}" th:object="${user}">
-    <label for="name">Enter name</label>
+    <label for="name">Введите имя</label>
     <input type="text" th:field="*{name}" id="name">
     <br/>
-    <label for="age">Enter age</label>
+    <label for="age">Введите возраст</label>
     <input type="text" th:field="*{age}" id="age">
     <br/>
-    <label for="email">Enter email</label>
+    <label for="email">Введите email</label>
     <input type="text" th:field="*{email}" id="email">
     <br/>
-    <input type="submit" value="Create">
+    <input type="submit" value="Создать">
 </form>
 
 </body>
