@@ -7,50 +7,43 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    public UserDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
-        return sessionFactory.getCurrentSession().createQuery("from User").getResultList();
+        return entityManager.createQuery("from User").getResultList();
     }
 
     @Override
     @Transactional(readOnly = true)
     public User showUser(int id) {
-        return sessionFactory.getCurrentSession().get(User.class, id);
+        return entityManager.find(User.class, id);
     }
 
     @Override
     @Transactional
     public void delete(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        session.remove(session.get(User.class, id));
+        entityManager.remove(entityManager.find(User.class, id));
     }
 
     @Override
     @Transactional
     public void save(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        entityManager.persist(user);
     }
 
     @Override
     @Transactional
-    public void update(int id, User udatedUser) {
-        User toBeUpdated = sessionFactory.getCurrentSession().get(User.class, id);
-
-        toBeUpdated.setName(udatedUser.getName());
-        toBeUpdated.setAge(udatedUser.getAge());
-        toBeUpdated.setEmail(udatedUser.getEmail());
+    public void update(int id, User user) {
+        entityManager.merge(user);
     }
 }
